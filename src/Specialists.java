@@ -4,18 +4,16 @@ public class Specialists {
     public static void workingWithClient() {
         Client client;
         try {
-            while (!Thread.currentThread().isInterrupted()) {
+            while (true) {
                 client = Client.getQueueClients().take();
                 System.out.printf("Клиента номер %d обслуживает специалист %s\n",
                         client.getNumber(), Thread.currentThread().getName());
                 Thread.sleep(WORKING_TIME);
                 if (Client.getQueueClients().isEmpty() && Client.TOTAL_COUNT_CLIENTS <= Client.clientCount)
-                    Thread.currentThread().interrupt();
+                    break;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 }
